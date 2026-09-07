@@ -29,7 +29,9 @@ if (!defined('DS_COMPONENTS_LOADED')) {
         $css = [
             ds_asset('css/tokens.css', $base),
             ds_asset('css/base.css', $base),
+            ds_asset('css/typography.css', $base),
             ds_asset('css/components.css', $base),
+            ds_asset('css/layout.css', $base),
         ];
         foreach ($css as $href) {
             echo '<link rel="stylesheet" href="' . htmlspecialchars($href, ENT_QUOTES) . '">' . "\n";
@@ -121,6 +123,51 @@ if (!defined('DS_COMPONENTS_LOADED')) {
     function ds_render_badge(string $label): string
     {
         return '<span class="ds-badge">' . htmlspecialchars($label, ENT_QUOTES) . '</span>';
+    }
+
+    /**
+     * Renders one Sidebar-Navigationseintrag.
+     *
+     * @param string      $iconSvgHtml Bereits sicheres inline <svg>…</svg> Markup.
+     * @param string|null $badge       Optionales Badge (z. B. Anzahl).
+     */
+    function ds_render_sidebar_item(string $iconSvgHtml, string $label, string $href = '#', bool $active = false, ?string $badge = null): string
+    {
+        $badgeHtml = $badge !== null
+            ? '<span class="ds-sidebar__badge">' . htmlspecialchars($badge, ENT_QUOTES) . '</span>'
+            : '';
+
+        return sprintf(
+            '<a class="ds-sidebar__item%1$s" href="%2$s">
+    <span class="ds-sidebar__icon">%3$s</span>
+    <span class="ds-sidebar__label">%4$s</span>
+    %5$s
+</a>',
+            $active ? ' is-active' : '',
+            htmlspecialchars($href, ENT_QUOTES),
+            $iconSvgHtml,
+            htmlspecialchars($label, ENT_QUOTES),
+            $badgeHtml
+        );
+    }
+
+    /** Renders eine KPI-/Stat-Kachel für Dashboards. */
+    function ds_render_stat_tile(string $label, string $value, ?string $delta = null, bool $deltaUp = true): string
+    {
+        $deltaHtml = $delta !== null
+            ? sprintf('<span class="ds-stat-tile__delta ds-stat-tile__delta--%1$s">%2$s</span>', $deltaUp ? 'up' : 'down', htmlspecialchars($delta, ENT_QUOTES))
+            : '';
+
+        return sprintf(
+            '<div class="ds-panel ds-stat-tile">
+    <span class="ds-stat-tile__label">%1$s</span>
+    <span class="ds-stat-tile__value ds-figure">%2$s</span>
+    %3$s
+</div>',
+            htmlspecialchars($label, ENT_QUOTES),
+            htmlspecialchars($value, ENT_QUOTES),
+            $deltaHtml
+        );
     }
 
     /**

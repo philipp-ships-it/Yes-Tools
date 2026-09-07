@@ -7,18 +7,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/typography.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
   <style>
     .ds-guide-section { max-width: 1024px; margin: 0 auto; padding: 3rem 1.5rem; }
     .ds-guide-header { text-align: center; padding: 4rem 1.5rem 2rem; }
-    .ds-guide-header h1 { font-size: 2.75rem; font-weight: 800; margin: 0 0 0.5rem; }
-    .ds-guide-header p { color: var(--ds-text-70); font-size: 1.05rem; max-width: 640px; margin: 0 auto; }
-    .ds-guide-section h2 { font-size: 1.5rem; font-weight: 700; margin: 0 0 1.25rem; }
+    .ds-guide-header h1 { margin: 0 0 0.5rem; }
+    .ds-guide-section > h2 { margin: 0 0 1.25rem; }
     .ds-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
     .ds-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+    .ds-grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
     .ds-swatch { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: var(--ds-text-60); }
     .ds-swatch__chip { width: 64px; height: 64px; border-radius: var(--ds-radius-lg); border: 1px solid var(--ds-border-strong); }
     .ds-theme-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 10; }
+    .ds-shell-demo { height: 420px; border: 1px solid var(--ds-border-strong); border-radius: var(--ds-radius-xl); overflow: hidden; }
+    .ds-shell-demo .ds-shell { min-height: 0; height: 100%; }
+    .ds-shell-demo .ds-shell__main { padding: 1.5rem; }
+    .ds-type-row { display: flex; align-items: baseline; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid var(--ds-border); }
+    .ds-type-row:last-child { border-bottom: none; }
+    .ds-type-row span.ds-tag { font-size: 0.65rem; font-family: var(--ds-font-mono); color: var(--ds-text-60); width: 3rem; flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -26,7 +34,7 @@
 
   <header class="ds-guide-header">
     <h1>YES Tools — Design System</h1>
-    <p>Komponenten &amp; Styles, extrahiert aus dem Welcome-Popup und der Startseite. Eine Datei-Basis in CSS, JS und PHP für alle YES-Projekte.</p>
+    <p class="ds-lead" style="margin-inline:auto;">Komponenten &amp; Styles, extrahiert aus dem Welcome-Popup und der Startseite. Eine Datei-Basis in CSS, JS und PHP für alle YES-Projekte.</p>
   </header>
 
   <section class="ds-guide-section">
@@ -42,11 +50,59 @@
   </section>
 
   <section class="ds-guide-section">
+    <h2>Typografie</h2>
+    <div class="ds-panel">
+      <div class="ds-type-row"><span class="ds-tag">h1</span><h1 style="font-size:2.5rem;">YES Tools</h1></div>
+      <div class="ds-type-row"><span class="ds-tag">h2</span><h2>Willkommen bei 2.0</h2></div>
+      <div class="ds-type-row"><span class="ds-tag">h3</span><h3>Native KI-Integration</h3></div>
+      <div class="ds-type-row"><span class="ds-tag">h4</span><h4>Abschnittstitel</h4></div>
+      <div class="ds-type-row"><span class="ds-tag">h5</span><h5>Kategorie-Label</h5></div>
+      <div class="ds-type-row"><span class="ds-tag">eyebrow</span><span class="ds-eyebrow">Recent Tools</span></div>
+      <div class="ds-type-row"><span class="ds-tag">lead</span><p class="ds-lead">Eine neue Ära der Produktivität — intelligenter, schneller und tiefer integriert.</p></div>
+      <div class="ds-type-row"><span class="ds-tag">p</span><p>Fließtext mit einem <a class="ds-link" href="#">Link</a> und <code class="ds-code-inline">inline code</code>.</p></div>
+    </div>
+  </section>
+
+  <section class="ds-guide-section">
+    <h2>Shimmer-Effekte</h2>
+    <div class="ds-panel" style="display:flex; flex-direction:column; gap:1.5rem;">
+      <h2 class="ds-shimmer-text" style="margin:0;">Generiere Antwort über OpenRouter…</h2>
+      <div>
+        <p class="ds-eyebrow" style="margin-bottom:0.5rem;">Skeleton-Loader</p>
+        <div class="ds-skeleton ds-skeleton-text"></div>
+        <div class="ds-skeleton ds-skeleton-text ds-skeleton-text--sm"></div>
+        <div class="ds-row" style="margin-top:0.75rem;">
+          <div class="ds-skeleton ds-skeleton-avatar"></div>
+          <div class="ds-skeleton ds-skeleton-card" style="flex:1;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-guide-section">
     <h2>Buttons</h2>
     <div class="ds-row">
-      <button class="ds-btn ds-btn--primary" data-ds-ripple type="button">Jetzt loslegen</button>
-      <button class="ds-btn ds-btn--ghost" data-ds-ripple type="button">Sekundär</button>
+      <button class="ds-btn ds-btn--primary" data-ds-ripple type="button">Primary</button>
+      <button class="ds-btn ds-btn--secondary" data-ds-ripple type="button">Secondary</button>
+      <button class="ds-btn ds-btn--outline" data-ds-ripple type="button">Outline</button>
+      <button class="ds-btn ds-btn--ghost" data-ds-ripple type="button">Ghost</button>
+      <button class="ds-btn ds-btn--danger" data-ds-ripple type="button">Löschen</button>
       <button class="ds-btn ds-btn--icon" data-ds-tooltip="Einstellungen" type="button">⚙</button>
+    </div>
+    <div class="ds-row" style="margin-top:1rem;">
+      <button class="ds-btn ds-btn--primary ds-btn--sm" type="button">Klein</button>
+      <button class="ds-btn ds-btn--primary" type="button">Standard</button>
+      <button class="ds-btn ds-btn--primary ds-btn--lg" type="button">Groß</button>
+      <button class="ds-btn ds-btn--primary" disabled type="button">Deaktiviert</button>
+      <button class="ds-btn ds-btn--primary is-loading" type="button" id="loading-demo-btn">Lädt…</button>
+      <button class="ds-btn ds-btn--ghost" type="button" onclick="DS.setButtonLoading('#loading-demo-btn', !document.getElementById('loading-demo-btn').classList.contains('is-loading'))">Loading toggeln</button>
+    </div>
+    <div class="ds-row" style="margin-top:1rem;">
+      <div class="ds-btn-group">
+        <button class="ds-btn ds-btn--secondary" type="button">Tag</button>
+        <button class="ds-btn ds-btn--secondary" type="button">Woche</button>
+        <button class="ds-btn ds-btn--secondary" type="button">Monat</button>
+      </div>
     </div>
   </section>
 
@@ -87,6 +143,35 @@
   </section>
 
   <section class="ds-guide-section">
+    <h2>Stat-Kacheln &amp; Empty-State</h2>
+    <div class="ds-grid-4" style="margin-bottom:1.5rem;">
+      <div class="ds-panel ds-stat-tile">
+        <span class="ds-stat-tile__label">Aktive Tools</span>
+        <span class="ds-stat-tile__value ds-figure">17</span>
+        <span class="ds-stat-tile__delta ds-stat-tile__delta--up">+2 diesen Monat</span>
+      </div>
+      <div class="ds-panel ds-stat-tile">
+        <span class="ds-stat-tile__label">KI-Anfragen heute</span>
+        <span class="ds-stat-tile__value ds-figure">348</span>
+        <span class="ds-stat-tile__delta ds-stat-tile__delta--up">+12%</span>
+      </div>
+      <div class="ds-panel ds-stat-tile">
+        <span class="ds-stat-tile__label">Fehlerquote</span>
+        <span class="ds-stat-tile__value ds-figure">0,4%</span>
+        <span class="ds-stat-tile__delta ds-stat-tile__delta--down">−0,1%</span>
+      </div>
+    </div>
+    <div class="ds-panel">
+      <div class="ds-empty-state">
+        <div class="ds-empty-state__icon">📭</div>
+        <h4>Noch keine Snippets gespeichert</h4>
+        <p class="ds-text-muted" style="max-width:24rem;">Speichere wiederverwendbare Code-Blöcke aus der KI-Sidebar oder dem Component Storage.</p>
+        <button class="ds-btn ds-btn--secondary ds-btn--sm" type="button">Snippet erstellen</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-guide-section">
     <h2>Eingabefeld</h2>
     <div class="ds-field">
       <textarea class="ds-input" data-ds-autoresize data-min-height="52" data-max-height="200" placeholder="Was möchtest du bauen oder analysieren?"></textarea>
@@ -104,6 +189,65 @@
       </label>
       <span class="ds-badge">Neu</span>
       <span class="ds-badge">Beta</span>
+    </div>
+  </section>
+
+  <section class="ds-guide-section">
+    <h2>Studio-Layout (Sidebar + Shell)</h2>
+    <p class="ds-text-muted" style="margin-bottom:1rem;">Traditionelle, immer sichtbare Sidebar-Navigation (Alternative zur schwebenden Notch-Sidebar der App-Chrome) — collapsible per Klick.</p>
+    <div class="ds-shell-demo">
+      <div class="ds-shell">
+        <div class="ds-shell__sidebar">
+          <aside class="ds-sidebar" id="demo-sidebar" data-ds-sidebar style="height:100%;">
+            <div class="ds-sidebar__header">
+              <div class="ds-sidebar__logo">Y</div>
+              <span class="ds-sidebar__title">YES Tools</span>
+              <button class="ds-sidebar__collapse-btn" type="button" data-ds-sidebar-toggle="#demo-sidebar" data-ds-tooltip="Ein-/Ausklappen">‹</button>
+            </div>
+            <nav class="ds-sidebar__nav">
+              <span class="ds-sidebar__section-label">Werkzeuge</span>
+              <a class="ds-sidebar__item is-active" href="#"><span class="ds-sidebar__icon">🏠</span><span class="ds-sidebar__label">Start</span></a>
+              <a class="ds-sidebar__item" href="#"><span class="ds-sidebar__icon">🧩</span><span class="ds-sidebar__label">HTML Tools</span></a>
+              <a class="ds-sidebar__item" href="#"><span class="ds-sidebar__icon">✉️</span><span class="ds-sidebar__label">Newsletter Studio</span><span class="ds-sidebar__badge">Neu</span></a>
+              <a class="ds-sidebar__item" href="#"><span class="ds-sidebar__icon">🤖</span><span class="ds-sidebar__label">YES KI</span></a>
+              <span class="ds-sidebar__section-label">System</span>
+              <a class="ds-sidebar__item" href="#"><span class="ds-sidebar__icon">⚙️</span><span class="ds-sidebar__label">Einstellungen</span></a>
+            </nav>
+            <div class="ds-sidebar__footer">
+              <div class="ds-skeleton ds-skeleton-avatar" style="width:32px;height:32px;"></div>
+              <div class="ds-sidebar__meta">
+                <div class="ds-sidebar__meta-name">Philipp Paulik</div>
+                <div class="ds-sidebar__meta-sub">YES Agentur</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <div class="ds-shell__main">
+          <div class="ds-toolbar" style="margin-bottom:1rem;">
+            <button class="ds-btn ds-btn--icon" type="button">B</button>
+            <button class="ds-btn ds-btn--icon" type="button">I</button>
+            <span class="ds-toolbar__divider"></span>
+            <button class="ds-btn ds-btn--icon" type="button">↺</button>
+            <span class="ds-toolbar__spacer"></span>
+            <button class="ds-btn ds-btn--secondary ds-btn--sm" type="button">Exportieren</button>
+          </div>
+          <div class="ds-split" style="height:220px;">
+            <div class="ds-split__pane" style="padding:1rem;">
+              <span class="ds-eyebrow">Code</span>
+              <pre style="margin-top:0.5rem;font-family:var(--ds-font-mono);font-size:0.75rem;color:var(--ds-text-70);">&lt;div class="card"&gt;
+  &lt;h3&gt;Hallo&lt;/h3&gt;
+&lt;/div&gt;</pre>
+            </div>
+            <div class="ds-split__divider"></div>
+            <div class="ds-split__pane" style="padding:1rem;">
+              <span class="ds-eyebrow">Live-Vorschau</span>
+              <div class="ds-card" style="margin-top:0.75rem;max-width:220px;">
+                <h3 class="ds-card__title">Hallo</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 

@@ -12,12 +12,15 @@ Design/
 ├── css/
 │   ├── tokens.css       Design-Tokens: Farben, Radius, Schatten, Motion, Typo (Light/Dark via CSS-Variablen)
 │   ├── base.css         Reset, Scrollbar, Keyframes
-│   └── components.css   Buttons, Cards, Modal/Popup, Inputs, Checkbox, Tooltip, Badge, App-Chrome
+│   ├── typography.css   H1–H6, Lead-Text, Eyebrow-Label, Links, Listen, Zitate, Inline-Code
+│   ├── components.css   Buttons (inkl. Varianten/Größen/Zustände), Cards, Modal/Popup, Inputs, Checkbox,
+│   │                     Tooltip, Badge, Shimmer-/Skeleton-Effekte, App-Chrome
+│   └── layout.css       Studio-Shell, klassische Sidebar-Navigation, Panel, Toolbar, Split-View, Stat-Kacheln, Empty-State
 ├── js/
 │   └── design-system.js Vanilla-JS-Verhalten: Modal-Steuerung inkl. "Nicht mehr anzeigen" (localStorage),
-│                         Tooltips, Ripple-Effekt, Auto-Resize-Textarea, Theme-Toggle
+│                         Tooltips, Ripple-Effekt, Auto-Resize-Textarea, Sidebar-Collapse, Button-Loading, Theme-Toggle
 ├── php/
-│   ├── components.php   PHP-Render-Funktionen (Buttons, Karten, Checkbox, komplettes Popup)
+│   ├── components.php   PHP-Render-Funktionen (Buttons, Karten, Checkbox, Sidebar-Item, Stat-Kachel, komplettes Popup)
 │   └── example-usage.php Beispielseite, die components.php nutzt
 └── index.html            Lebender Styleguide / Demo-Seite aller Komponenten
 ```
@@ -74,6 +77,12 @@ immer dunkel (schwarz), wie im Original-Header/Sidebar der App.
 | `.ds-checkbox` | Custom-Checkbox ("Nicht mehr anzeigen") aus dem Popup |
 | `.ds-tooltip` | Portiert aus `components/ui/Tooltip.tsx` |
 | `.ds-topbar`, `.ds-notch-*` | Bezel/Notch-Sidebar-Chrome aus `index.html` |
+| `.ds-sidebar` | Klassische, immer sichtbare Sidebar-Navigation mit Collapse (`data-ds-sidebar` + `data-ds-sidebar-toggle`) |
+| `.ds-shell` | Studio-App-Shell: Topbar + Sidebar + Hauptbereich als CSS-Grid |
+| `.ds-split` | Zweigeteilter Editor (Code | Live-Vorschau), wie in WYSIWYG Studio |
+| `.ds-panel`, `.ds-toolbar`, `.ds-stat-tile`, `.ds-empty-state` | Wiederkehrende Layout-Bausteine für Dashboards/Einstellungsseiten |
+| `.ds-shimmer-text`, `.ds-skeleton` | Shimmer-/Skeleton-Ladeeffekte (Portierung von `TextShimmer.tsx`) |
+| `h1`–`h6`, `.ds-lead`, `.ds-eyebrow` | Typografie-Skala aus Hero-Headline, Modal-Titel & Abschnitts-Labels |
 
 ## Best Practices
 

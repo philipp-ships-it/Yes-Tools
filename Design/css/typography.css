@@ -1,0 +1,87 @@
+/* ==========================================================================
+   YES Tools — Typografie
+   Skala & Textstile, abgeleitet aus der Home-Hero ("YES Tools" H1) und den
+   Card-/Modal-Überschriften. Erfordert tokens.css.
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--ds-font-sans);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ds-text);
+}
+
+/* Skalenwerte bewusst an den bestehenden Tailwind-Größen der App ausgerichtet
+   (Home.tsx: text-5xl md:text-7xl für H1, Modal: text-3xl für H2). */
+h1, .ds-h1 { font-size: clamp(2.25rem, 1.6rem + 3vw, 4.5rem); line-height: 1.05; }
+h2, .ds-h2 { font-size: clamp(1.5rem, 1.2rem + 1.4vw, 1.875rem); line-height: 1.15; }
+h3, .ds-h3 { font-size: 1.125rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; }
+h4, .ds-h4 { font-size: 1rem; font-weight: 700; line-height: 1.4; }
+h5, .ds-h5 { font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ds-text-60); }
+h6, .ds-h6 { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ds-text-60); }
+
+/* Subtitle unter einem H1, wie im Home-Hero ("A unified suite designed for…") */
+.ds-lead {
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--ds-text-70);
+  max-width: 42rem;
+}
+
+/* Kleiner, uppercase Abschnitts-Label wie "RECENT TOOLS" auf der Startseite */
+.ds-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ds-text-60);
+}
+
+p { margin: 0 0 1em; line-height: 1.65; color: var(--ds-text); }
+p:last-child { margin-bottom: 0; }
+
+.ds-link {
+  color: var(--ds-accent-blue);
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity var(--ds-duration-base) ease;
+}
+.ds-link:hover { opacity: 0.75; text-decoration: underline; }
+
+ul.ds-list, ol.ds-list {
+  margin: 0 0 1em;
+  padding-left: 1.25em;
+  color: var(--ds-text);
+  line-height: 1.7;
+}
+ul.ds-list { list-style: disc; }
+ol.ds-list { list-style: decimal; }
+
+blockquote.ds-quote {
+  margin: 0 0 1em;
+  padding: 0.25rem 0 0.25rem 1rem;
+  border-left: 3px solid var(--ds-border-strong);
+  color: var(--ds-text-70);
+  font-style: italic;
+}
+
+code.ds-code-inline {
+  font-family: var(--ds-font-mono);
+  font-size: 0.85em;
+  background: var(--ds-hover-tint);
+  padding: 0.15em 0.4em;
+  border-radius: 6px;
+}
+
+/* Zahlen/Statistiken groß & tabellarisch, für KPI-Kacheln (siehe layout.css .ds-stat-tile) */
+.ds-figure {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ds-text);
+}

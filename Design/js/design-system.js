@@ -184,12 +184,61 @@
   }
 
   /* ---------------------------------------------------------------- */
+  /* Sidebar collapse/expand                                           */
+  /* ---------------------------------------------------------------- */
+  const Sidebar = {
+    toggle(target) {
+      const el = typeof target === "string" ? document.querySelector(target) : target;
+      if (!el) return;
+      el.classList.toggle("is-collapsed");
+      try {
+        localStorage.setItem(STORAGE_PREFIX + "sidebar:" + (el.id || "default"), el.classList.contains("is-collapsed") ? "1" : "0");
+      } catch (e) {}
+    },
+    restore(target) {
+      const el = typeof target === "string" ? document.querySelector(target) : target;
+      if (!el) return;
+      try {
+        const collapsed = localStorage.getItem(STORAGE_PREFIX + "sidebar:" + (el.id || "default"));
+        if (collapsed === "1") el.classList.add("is-collapsed");
+      } catch (e) {}
+    }
+  };
+
+  function initSidebars(root) {
+    (root || document).querySelectorAll("[data-ds-sidebar]").forEach((sidebar) => {
+      if (sidebar.dataset.dsSidebarInit) return;
+      sidebar.dataset.dsSidebarInit = "1";
+      Sidebar.restore(sidebar);
+    });
+    document.querySelectorAll("[data-ds-sidebar-toggle]").forEach((btn) => {
+      if (btn.dataset.dsToggleInit) return;
+      btn.dataset.dsToggleInit = "1";
+      btn.addEventListener("click", () => {
+        Sidebar.toggle(btn.getAttribute("data-ds-sidebar-toggle"));
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Button loading state                                              */
+  /* ---------------------------------------------------------------- */
+  function setButtonLoading(target, isLoading) {
+    const el = typeof target === "string" ? document.querySelector(target) : target;
+    if (!el) return;
+    el.classList.toggle("is-loading", !!isLoading);
+    if (isLoading) el.setAttribute("aria-busy", "true");
+    else el.removeAttribute("aria-busy");
+  }
+
+  /* ---------------------------------------------------------------- */
   /* Auto-init on DOM ready                                            */
   /* ---------------------------------------------------------------- */
   function initAll(root) {
     initTooltips(root);
     initRipple(root);
     initAutoResize(root);
+    initSidebars(root);
 
     (root || document).querySelectorAll("[data-ds-modal]").forEach((overlay) => {
       if (overlay.dataset.dsModalInit) return;
@@ -219,5 +268,5 @@
     initAll();
   }
 
-  global.DS = { Theme, Modal, initTooltips, initRipple, autoResize, initAutoResize, initAll };
+  global.DS = { Theme, Modal, Sidebar, initTooltips, initRipple, autoResize, initAutoResize, initSidebars, setButtonLoading, initAll };
 })(window);

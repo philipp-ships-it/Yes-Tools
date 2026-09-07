@@ -1,0 +1,275 @@
+/* ==========================================================================
+   YES Tools — Layout-Bausteine
+   Studio-Shell (Topbar + Sidebar + Hauptbereich), klassische Sidebar-
+   Navigation, Split-View-Editor, Toolbars, Panels, Empty-States, Stat-Kacheln.
+   Ergänzt die schwebende Notch-Sidebar aus components.css um eine
+   traditionelle, immer sichtbare Sidebar-Navigation.
+   ========================================================================== */
+
+/* ------------------------------------------------------------------ */
+/* App-Shell: Grid aus Topbar, Sidebar und Hauptbereich                 */
+/* ------------------------------------------------------------------ */
+.ds-shell {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "topbar topbar"
+    "sidebar main";
+  min-height: 100vh;
+  background: var(--ds-bg);
+  color: var(--ds-text);
+}
+.ds-shell__topbar { grid-area: topbar; }
+.ds-shell__sidebar { grid-area: sidebar; }
+.ds-shell__main {
+  grid-area: main;
+  min-width: 0;
+  overflow-y: auto;
+  padding: var(--ds-space-8);
+}
+
+/* ------------------------------------------------------------------ */
+/* Sidebar — klassische, immer sichtbare Navigation                    */
+/* ------------------------------------------------------------------ */
+.ds-sidebar {
+  --ds-sidebar-width: 256px;
+  --ds-sidebar-width-collapsed: 72px;
+  width: var(--ds-sidebar-width);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--ds-surface);
+  border-right: 1px solid var(--ds-border);
+  transition: width var(--ds-duration-slow) var(--ds-ease-out);
+  overflow-x: hidden;
+}
+.ds-sidebar.is-collapsed { width: var(--ds-sidebar-width-collapsed); }
+.ds-sidebar.is-collapsed .ds-sidebar__label,
+.ds-sidebar.is-collapsed .ds-sidebar__section-label,
+.ds-sidebar.is-collapsed .ds-sidebar__meta { display: none; }
+
+.ds-sidebar__header {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-4) var(--ds-space-4);
+  border-bottom: 1px solid var(--ds-border);
+  flex-shrink: 0;
+}
+.ds-sidebar__logo {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--ds-radius-md);
+  background: var(--ds-invert-bg);
+  color: var(--ds-invert-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.ds-sidebar__title { font-weight: 800; font-size: 0.95rem; white-space: nowrap; }
+
+.ds-sidebar__nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--ds-space-4) var(--ds-space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-1);
+}
+
+.ds-sidebar__section-label {
+  padding: var(--ds-space-4) var(--ds-space-3) var(--ds-space-1);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ds-text-60);
+}
+.ds-sidebar__section-label:first-child { padding-top: 0; }
+
+.ds-sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--ds-radius-md);
+  color: var(--ds-text-70);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color var(--ds-duration-base) ease, color var(--ds-duration-base) ease;
+}
+.ds-sidebar__item:hover { background: var(--ds-hover-tint); color: var(--ds-text); }
+.ds-sidebar__item.is-active {
+  background: var(--ds-invert-bg);
+  color: var(--ds-invert-text);
+}
+.ds-sidebar__item svg,
+.ds-sidebar__item .ds-sidebar__icon { flex-shrink: 0; width: 18px; height: 18px; }
+.ds-sidebar__label { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+.ds-sidebar__badge {
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--ds-radius-pill);
+  background: var(--ds-hover-tint);
+  color: var(--ds-text-70);
+}
+.ds-sidebar__item.is-active .ds-sidebar__badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--ds-invert-text);
+}
+
+.ds-sidebar__footer {
+  padding: var(--ds-space-3);
+  border-top: 1px solid var(--ds-border);
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+  flex-shrink: 0;
+}
+.ds-sidebar__meta { overflow: hidden; }
+.ds-sidebar__meta-name { font-size: 0.8rem; font-weight: 700; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+.ds-sidebar__meta-sub { font-size: 0.7rem; color: var(--ds-text-60); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+
+.ds-sidebar__collapse-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--ds-radius-sm);
+  border: none;
+  background: transparent;
+  color: var(--ds-text-60);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--ds-duration-slow) var(--ds-ease-out), background-color var(--ds-duration-base) ease;
+}
+.ds-sidebar__collapse-btn:hover { background: var(--ds-hover-tint); color: var(--ds-text); }
+.ds-sidebar.is-collapsed .ds-sidebar__collapse-btn { transform: rotate(180deg); margin-left: 0; }
+.ds-sidebar.is-collapsed .ds-sidebar__header { justify-content: center; }
+
+/* ------------------------------------------------------------------ */
+/* Panel — Karten-Container für Einstellungen/Formulare (nicht klickbar) */
+/* ------------------------------------------------------------------ */
+.ds-panel {
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-xl);
+  padding: var(--ds-space-6);
+  box-shadow: var(--ds-shadow-soft);
+}
+.ds-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--ds-space-4);
+  padding-bottom: var(--ds-space-4);
+  border-bottom: 1px solid var(--ds-border);
+}
+.ds-panel__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-4);
+  padding: var(--ds-space-3) 0;
+  border-bottom: 1px solid var(--ds-border);
+}
+.ds-panel__row:last-child { border-bottom: none; padding-bottom: 0; }
+
+/* ------------------------------------------------------------------ */
+/* Toolbar — horizontale Aktionsleiste (Editor-Kopfzeile)               */
+/* ------------------------------------------------------------------ */
+.ds-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-2) var(--ds-space-3);
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+}
+.ds-toolbar__divider { width: 1px; align-self: stretch; background: var(--ds-border-strong); margin: 0 var(--ds-space-1); }
+.ds-toolbar__spacer { flex: 1; }
+
+/* ------------------------------------------------------------------ */
+/* Split-View — zweigeteilter Editor (Code | Live-Vorschau)            */
+/* ------------------------------------------------------------------ */
+.ds-split {
+  display: grid;
+  grid-template-columns: 1fr 4px 1fr;
+  height: 100%;
+  min-height: 0;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-xl);
+  overflow: hidden;
+}
+.ds-split__pane { overflow: auto; background: var(--ds-surface); min-width: 0; }
+.ds-split__pane + .ds-split__pane { border-left: none; }
+.ds-split__divider {
+  background: var(--ds-border-strong);
+  cursor: col-resize;
+  position: relative;
+}
+.ds-split__divider:hover { background: var(--ds-accent-blue); }
+
+/* ------------------------------------------------------------------ */
+/* Stat-Kachel — KPI-Anzeige für Dashboards                             */
+/* ------------------------------------------------------------------ */
+.ds-stat-tile {
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-xl);
+  padding: var(--ds-space-4) var(--ds-space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-1);
+}
+.ds-stat-tile__label { font-size: 0.75rem; font-weight: 600; color: var(--ds-text-60); text-transform: uppercase; letter-spacing: 0.04em; }
+.ds-stat-tile__value { font-size: 1.75rem; }
+.ds-stat-tile__delta { font-size: 0.75rem; font-weight: 700; }
+.ds-stat-tile__delta--up { color: #16a34a; }
+.ds-stat-tile__delta--down { color: #dc2626; }
+
+/* ------------------------------------------------------------------ */
+/* Empty-State — leerer Bereich mit Icon, Text & CTA                   */
+/* ------------------------------------------------------------------ */
+.ds-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--ds-space-3);
+  padding: var(--ds-space-12) var(--ds-space-6);
+  color: var(--ds-text-60);
+}
+.ds-empty-state__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--ds-radius-xl);
+  background: var(--ds-hover-tint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ds-text-60);
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive: Sidebar wird auf Schmalbildschirmen zur Icon-Leiste      */
+/* ------------------------------------------------------------------ */
+@media (max-width: 768px) {
+  .ds-shell { grid-template-columns: auto 1fr; }
+  .ds-sidebar { width: var(--ds-sidebar-width-collapsed); }
+  .ds-sidebar .ds-sidebar__label,
+  .ds-sidebar .ds-sidebar__section-label,
+  .ds-sidebar .ds-sidebar__meta { display: none; }
+  .ds-split { grid-template-columns: 1fr; grid-template-rows: 1fr 4px 1fr; }
+  .ds-split__divider { cursor: row-resize; }
+}

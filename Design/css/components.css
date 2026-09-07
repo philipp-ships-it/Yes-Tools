@@ -406,3 +406,153 @@
 .ds-notch-dock--left  .ds-notch { border-radius: 0 18px 18px 0; box-shadow: 6px 0 18px rgba(0,0,0,0.15); }
 .ds-notch-dock--right .ds-notch { border-radius: 18px 0 0 18px; box-shadow: -6px 0 18px rgba(0,0,0,0.15); }
 .ds-notch:hover { width: 48px; padding: 22px 0; }
+
+/* ------------------------------------------------------------------ */
+/* Buttons — weitere Varianten, Größen & Zustände                     */
+/* ------------------------------------------------------------------ */
+.ds-btn--secondary {
+  background: var(--ds-surface);
+  color: var(--ds-text);
+  border: 1px solid var(--ds-border-strong);
+  box-shadow: var(--ds-shadow-soft);
+}
+.ds-btn--outline {
+  background: transparent;
+  color: var(--ds-text);
+  border: 1px solid var(--ds-border-strong);
+  box-shadow: none;
+}
+.ds-btn--outline:hover { background: var(--ds-hover-tint); }
+.ds-btn--danger {
+  background: #dc2626;
+  color: #ffffff;
+}
+.ds-btn--danger:hover { box-shadow: 0 10px 30px rgba(220, 38, 38, 0.35); }
+
+.ds-btn--sm { padding: 0.5rem 1.1rem; font-size: 0.75rem; }
+.ds-btn--lg { padding: 1.1rem 2.5rem; font-size: 1rem; }
+
+.ds-btn[disabled],
+.ds-btn.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+/* Loading-Zustand: Inhalt bleibt für die Breite erhalten, aber unsichtbar,
+   ein Spinner wird zentriert darübergelegt — verhindert "Springen" der
+   Button-Breite beim Umschalten. Toggle via JS: DS.setButtonLoading(el, bool). */
+.ds-btn.is-loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+.ds-btn.is-loading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  color: var(--ds-invert-text);
+  animation: ds-spin 0.7s linear infinite;
+}
+.ds-btn--secondary.is-loading::after,
+.ds-btn--outline.is-loading::after { color: var(--ds-text); }
+
+@keyframes ds-spin { to { transform: rotate(360deg); } }
+
+.ds-btn-group {
+  display: inline-flex;
+  border-radius: var(--ds-radius-pill);
+  overflow: hidden;
+  box-shadow: var(--ds-shadow-lg);
+}
+.ds-btn-group .ds-btn {
+  border-radius: 0;
+  box-shadow: none;
+}
+.ds-btn-group .ds-btn:not(:last-child) { border-right: 1px solid rgba(255, 255, 255, 0.15); }
+.ds-btn-group .ds-btn--secondary:not(:last-child),
+.ds-btn-group .ds-btn--outline:not(:last-child) { border-right: 1px solid var(--ds-border-strong); }
+
+/* ------------------------------------------------------------------ */
+/* Shimmer-Effekte                                                      */
+/* ------------------------------------------------------------------ */
+
+/* Text-Shimmer: Verlauf über den Text laufen lassen (bg-clip-text),
+   Portierung von src/components/core/TextShimmer.tsx als reines CSS. */
+.ds-shimmer-text {
+  display: inline-block;
+  background-image: linear-gradient(
+    110deg,
+    var(--ds-text-60) 40%,
+    var(--ds-text) 50%,
+    var(--ds-text-60) 60%
+  );
+  background-size: 250% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: ds-shimmer-sweep 2.2s linear infinite;
+}
+
+@keyframes ds-shimmer-sweep {
+  from { background-position: 120% 0; }
+  to   { background-position: -20% 0; }
+}
+
+/* Skeleton-Loader: Platzhalter-Blöcke für ladende Inhalte. */
+.ds-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--ds-hover-tint);
+  border-radius: var(--ds-radius-md);
+}
+.ds-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  animation: ds-skeleton-sweep 1.6s ease-in-out infinite;
+}
+[data-theme="light"] .ds-skeleton::after { background: linear-gradient(90deg, transparent, rgba(0,0,0,0.06), transparent); }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .ds-skeleton::after {
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.06), transparent);
+  }
+}
+
+@keyframes ds-skeleton-sweep { to { transform: translateX(100%); } }
+
+.ds-skeleton-text { height: 0.9em; margin-bottom: 0.5em; width: 100%; }
+.ds-skeleton-text--sm { width: 60%; }
+.ds-skeleton-avatar { width: 40px; height: 40px; border-radius: 50%; }
+.ds-skeleton-card { height: 140px; border-radius: var(--ds-radius-2xl); }
+
+/* Shimmer-Rand: dezenter, wandernder Lichtstreifen am Kartenrand (Alternative
+   zu .ds-card--glow für ruhigere Oberflächen, z. B. Premium-/Beta-Badges). */
+.ds-shimmer-border {
+  position: relative;
+  overflow: hidden;
+}
+.ds-shimmer-border::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent 0%, rgba(255,255,255,0.5) 8%, transparent 16%);
+  animation: ds-spin-gradient 2.5s linear infinite;
+}
