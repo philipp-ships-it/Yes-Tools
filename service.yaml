@@ -1,0 +1,61 @@
+# Cloud Run service definition for the YES Tools deployment.
+#
+# Secrets are injected at deploy time — never commit real key values here.
+# Provide them via `gcloud run services update --update-secrets` / Secret
+# Manager, or via your CI/CD pipeline's secret store, and reference them
+# below with `valueFrom.secretKeyRef` (see commented example).
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: xlpm-pre
+  annotations:
+    run.googleapis.com/ingress: all
+    run.googleapis.com/invoker-iam-disabled: "true"
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: "11"
+        autoscaling.knative.dev/minScale: "0"
+        run.googleapis.com/cpu-throttling: "true"
+        run.googleapis.com/sessionAffinity: "true"
+    spec:
+      containerConcurrency: 1000
+      timeoutSeconds: 300
+      serviceAccountName: 325771936221-compute@developer.gserviceaccount.com
+      containers:
+      - name: nginx-container
+        image: europe-west2-docker.pkg.dev/ai-studio-registry-prod/ai-studio/deploy-container@sha256:2dd0cb2c444a76ea5689e1465e9bf0d7d72b3caf81469a5faec7e9657b77d5e4
+        ports:
+        - containerPort: 8080
+          name: http1
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: 512Mi
+        env:
+        - name: APPLET_ID
+          value: "578b9d26-86c1-4983-8034-b16c64ac7d12"
+        - name: GEMINI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: gemini-api-key
+              key: latest
+      - name: app-container
+        image: us-central1-docker.pkg.dev/serverless-runtimes/google-22/runtimes/nodejs22
+        command: ["/bin/sh"]
+        args: ["-c", "if [ -f server.js ]; then node server.js; else npm start; fi"]
+        resources:
+          limits:
+            cpu: "1"
+            memory: 3Gi
+        env:
+        - name: PORT
+          value: "3000"
+        - name: SQL_DB_NAME
+          value: "cloud_sql_production_database"
+        - name: VITE_OPENROUTER_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: openrouter-api-key
+              key: latest

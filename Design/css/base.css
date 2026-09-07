@@ -1,0 +1,76 @@
+/* ==========================================================================
+   YES Tools — Base / Reset
+   Global resets, typography defaults, scrollbars. Loaded after tokens.css.
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--ds-font-sans);
+  background: var(--ds-bg);
+  color: var(--ds-text);
+  transition: background-color var(--ds-duration-base) ease, color var(--ds-duration-base) ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ---- Thin, theme-aware scrollbar (".ds-scrollbar" or apply globally) ---- */
+.ds-scrollbar,
+.ds-scrollbar-global {
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ds-scrollbar-thumb);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ds-scrollbar-thumb-hover);
+}
+
+/* ---- Utility text-opacity helpers (mirrors the Tailwind black/60 pattern) ---- */
+.ds-text-muted   { color: var(--ds-text-70); }
+.ds-text-subtle  { color: var(--ds-text-60); }
+.ds-text-strong  { color: var(--ds-text-80); }
+
+/* ---- Shared keyframes ---- */
+@keyframes ds-fade-scale {
+  0%   { opacity: 0; transform: translateY(-2%) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+@keyframes ds-spin-gradient {
+  to { --ds-angle: 360deg; }
+}
+
+@property --ds-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes ds-ripple {
+  to { transform: scale(2.5); opacity: 0; }
+}

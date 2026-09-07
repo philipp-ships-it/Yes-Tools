@@ -1,0 +1,408 @@
+/* ==========================================================================
+   YES Tools — Design Components
+   Every class is prefixed "ds-" (Design System) to avoid collisions when
+   dropped into an existing PHP/HTML site. Requires tokens.css + base.css.
+   ========================================================================== */
+
+/* ------------------------------------------------------------------ */
+/* Buttons                                                             */
+/* ------------------------------------------------------------------ */
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-2);
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: var(--ds-font-sans);
+  border-radius: var(--ds-radius-pill);
+  padding: 0.85rem 2rem;
+  transition: transform var(--ds-duration-base) var(--ds-ease-spring),
+              opacity var(--ds-duration-base) ease,
+              box-shadow var(--ds-duration-base) ease;
+  box-shadow: var(--ds-shadow-lg);
+}
+.ds-btn:hover  { transform: scale(1.05); }
+.ds-btn:active { transform: scale(0.95); }
+
+.ds-btn--primary {
+  background: var(--ds-invert-bg);
+  color: var(--ds-invert-text);
+}
+
+.ds-btn--ghost {
+  background: var(--ds-hover-tint);
+  color: var(--ds-text);
+  box-shadow: none;
+}
+
+.ds-btn--icon {
+  padding: var(--ds-space-2);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ds-chrome-text-dim, var(--ds-text-70));
+  width: 32px;
+  height: 32px;
+}
+.ds-btn--icon:hover {
+  color: var(--ds-invert-text);
+  background: rgba(255, 255, 255, 0.18);
+  transform: scale(1.25);
+}
+
+/* ---- Ripple (pair with data-ds-ripple + design-system.js) ---- */
+.ds-ripple-host { position: relative; overflow: hidden; }
+.ds-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  transform: scale(0);
+  pointer-events: none;
+  animation: ds-ripple 0.6s ease-out;
+}
+
+/* ------------------------------------------------------------------ */
+/* Icon chip — the small rounded-square icon badge used on cards       */
+/* ------------------------------------------------------------------ */
+.ds-icon-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-hover-tint);
+  color: var(--ds-text);
+  flex-shrink: 0;
+  transition: colors var(--ds-duration-slow) ease;
+}
+.ds-icon-chip--sm { width: 40px; height: 40px; border-radius: var(--ds-radius-md); }
+
+/* ------------------------------------------------------------------ */
+/* Card — the tool card grid from the Home screen                      */
+/* ------------------------------------------------------------------ */
+.ds-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--ds-space-4);
+  height: 100%;
+  padding: var(--ds-space-6);
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-2xl);
+  box-shadow: var(--ds-shadow-soft);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--ds-duration-base) var(--ds-ease-out),
+              border-color var(--ds-duration-base) ease,
+              box-shadow var(--ds-duration-base) ease;
+}
+.ds-card:hover  { transform: translateY(-4px) scale(1.02); border-color: transparent; }
+.ds-card:active { transform: scale(0.98); }
+
+.ds-card__header { display: flex; align-items: center; justify-content: space-between; }
+.ds-card__arrow   { color: var(--ds-text-60); transition: transform var(--ds-duration-base) ease, color var(--ds-duration-base) ease; }
+.ds-card:hover .ds-card__arrow { color: var(--ds-text); transform: translateX(4px); }
+.ds-card__title { font-size: 1.125rem; font-weight: 700; margin: 0 0 0.25rem; }
+.ds-card__desc  { font-size: 0.875rem; line-height: 1.6; color: var(--ds-text-70); margin: 0; }
+
+/* ---- Animated "pulsing border" glow on hover (CSS approximation of
+        the PulsingBorder shader used in the React app) ---- */
+.ds-card--glow { overflow: visible; }
+.ds-card--glow::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: calc(var(--ds-radius-2xl) + 2px);
+  opacity: 0;
+  background: conic-gradient(from var(--ds-angle, 0deg),
+    var(--ds-accent-blue), var(--ds-accent-purple), var(--ds-accent-green), var(--ds-accent-blue));
+  transition: opacity var(--ds-duration-slow) ease;
+  animation: ds-spin-gradient 3s linear infinite;
+}
+.ds-card--glow:hover::before { opacity: 1; }
+
+/* ------------------------------------------------------------------ */
+/* Inputs — chat-style "AI input" pill textarea                        */
+/* ------------------------------------------------------------------ */
+.ds-field {
+  position: relative;
+  width: 100%;
+  max-width: 56rem;
+  margin: 0 auto;
+}
+.ds-input {
+  width: 100%;
+  min-height: 52px;
+  max-height: 200px;
+  resize: none;
+  background: var(--ds-surface);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-xl);
+  padding: 1rem 4rem 1rem 1.5rem;
+  font-family: var(--ds-font-sans);
+  font-size: 1rem;
+  color: var(--ds-text);
+  box-shadow: var(--ds-shadow-soft);
+  transition: border-color var(--ds-duration-slow) ease;
+}
+.ds-input::placeholder { color: var(--ds-text-60); }
+.ds-input:focus { outline: none; border-color: transparent; }
+
+.ds-field__action {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  border-radius: var(--ds-radius-md);
+  background: var(--ds-hover-tint);
+  padding: var(--ds-space-1) var(--ds-space-2);
+  display: flex;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  color: var(--ds-text-70);
+  transition: opacity var(--ds-duration-base) ease, transform var(--ds-duration-base) ease;
+}
+
+/* ---- Plain text input / textarea for forms ---- */
+.ds-text-input {
+  width: 100%;
+  border-radius: var(--ds-radius-md);
+  border: 1px solid var(--ds-border-strong);
+  background: var(--ds-surface);
+  color: var(--ds-text);
+  padding: var(--ds-space-3) var(--ds-space-4);
+  font-family: var(--ds-font-sans);
+  font-size: 0.9rem;
+}
+.ds-text-input:focus { outline: 2px solid var(--ds-accent-blue); outline-offset: 1px; }
+
+/* ------------------------------------------------------------------ */
+/* Checkbox — custom "peer-checked" style checkbox from the popup      */
+/* ------------------------------------------------------------------ */
+.ds-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  cursor: pointer;
+  user-select: none;
+}
+.ds-checkbox input {
+  position: absolute;
+  width: 1px; height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.ds-checkbox__box {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 1px solid var(--ds-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--ds-duration-base) ease, border-color var(--ds-duration-base) ease;
+}
+.ds-checkbox input:checked + .ds-checkbox__box {
+  background: var(--ds-invert-bg);
+  border-color: var(--ds-invert-bg);
+}
+.ds-checkbox__box svg {
+  width: 12px; height: 12px;
+  color: var(--ds-invert-text);
+  opacity: 0;
+  transition: opacity var(--ds-duration-base) ease;
+}
+.ds-checkbox input:checked + .ds-checkbox__box svg { opacity: 1; }
+.ds-checkbox__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ds-text-60);
+  transition: color var(--ds-duration-base) ease;
+}
+.ds-checkbox:hover .ds-checkbox__label { color: var(--ds-text); }
+
+/* ------------------------------------------------------------------ */
+/* Modal / Popup — the WelcomePopup dialog                             */
+/* ------------------------------------------------------------------ */
+.ds-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: var(--ds-overlay);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.ds-modal-overlay[hidden] { display: none; }
+
+.ds-modal {
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--ds-bg);
+  border-radius: var(--ds-radius-xl);
+  box-shadow: var(--ds-shadow-2xl);
+  animation: ds-fade-scale var(--ds-duration-slow) var(--ds-ease-out);
+}
+
+.ds-modal__media {
+  position: relative;
+  width: 100%;
+  background: #000;
+}
+.ds-modal__media img { width: 100%; height: auto; max-height: 300px; object-fit: cover; }
+.ds-modal__media::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 64px;
+  background: linear-gradient(to top, var(--ds-bg), transparent);
+}
+
+.ds-modal__body {
+  padding: 0.5rem 2rem 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-6);
+}
+
+.ds-modal__head { text-align: center; }
+.ds-modal__title {
+  font-size: 1.875rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.ds-modal__subtitle {
+  margin: 0.5rem 0 0;
+  font-size: 1.125rem;
+  color: var(--ds-text-60);
+}
+
+.ds-modal__features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-4);
+  max-width: 42rem;
+  margin: 0 auto;
+  width: 100%;
+}
+.ds-modal__feature { display: flex; gap: var(--ds-space-4); }
+.ds-modal__feature-icon { flex-shrink: 0; margin-top: 0.25rem; }
+.ds-modal__feature h3 { margin: 0 0 0.15rem; font-size: 1.05rem; font-weight: 700; }
+.ds-modal__feature p  { margin: 0; color: var(--ds-text-70); }
+
+.ds-modal__footer {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ds-border-strong);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-4);
+}
+
+/* ------------------------------------------------------------------ */
+/* Tooltip                                                              */
+/* ------------------------------------------------------------------ */
+.ds-tooltip-host { position: relative; display: inline-flex; }
+.ds-tooltip {
+  position: absolute;
+  z-index: 10000;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%) scale(0.95);
+  padding: 0.4rem 0.75rem;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: var(--ds-shadow-soft);
+  transition: opacity var(--ds-duration-base) var(--ds-ease-out), transform var(--ds-duration-base) var(--ds-ease-out);
+}
+.ds-tooltip-host:hover .ds-tooltip,
+.ds-tooltip-host:focus-within .ds-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* ------------------------------------------------------------------ */
+/* Badge                                                                */
+/* ------------------------------------------------------------------ */
+.ds-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--ds-radius-pill);
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: var(--ds-hover-tint);
+  color: var(--ds-text-70);
+}
+
+/* ------------------------------------------------------------------ */
+/* App chrome — top bar + floating "notch" side dock (from index.html) */
+/* Dark regardless of theme, matches the original bezel/notch styling. */
+/* ------------------------------------------------------------------ */
+.ds-topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 34px;
+  background: var(--ds-chrome-bg);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: var(--ds-chrome-text-dim);
+  font-size: 12px;
+}
+.ds-topbar__link { color: var(--ds-chrome-text-strong); text-decoration: none; font-weight: 600; }
+.ds-topbar__link:hover { opacity: 0.8; text-decoration: underline; }
+
+.ds-notch-dock {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2100;
+}
+.ds-notch-dock--left  { left: 10px; }
+.ds-notch-dock--right { right: 10px; }
+
+.ds-notch {
+  position: relative;
+  width: 42px;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background: var(--ds-chrome-bg);
+  transition: all var(--ds-duration-slow) var(--ds-ease-out);
+}
+.ds-notch-dock--left  .ds-notch { border-radius: 0 18px 18px 0; box-shadow: 6px 0 18px rgba(0,0,0,0.15); }
+.ds-notch-dock--right .ds-notch { border-radius: 18px 0 0 18px; box-shadow: -6px 0 18px rgba(0,0,0,0.15); }
+.ds-notch:hover { width: 48px; padding: 22px 0; }

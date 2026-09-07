@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YES Tools — Design System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <style>
+    .ds-guide-section { max-width: 1024px; margin: 0 auto; padding: 3rem 1.5rem; }
+    .ds-guide-header { text-align: center; padding: 4rem 1.5rem 2rem; }
+    .ds-guide-header h1 { font-size: 2.75rem; font-weight: 800; margin: 0 0 0.5rem; }
+    .ds-guide-header p { color: var(--ds-text-70); font-size: 1.05rem; max-width: 640px; margin: 0 auto; }
+    .ds-guide-section h2 { font-size: 1.5rem; font-weight: 700; margin: 0 0 1.25rem; }
+    .ds-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+    .ds-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+    .ds-swatch { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: var(--ds-text-60); }
+    .ds-swatch__chip { width: 64px; height: 64px; border-radius: var(--ds-radius-lg); border: 1px solid var(--ds-border-strong); }
+    .ds-theme-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 10; }
+  </style>
+</head>
+<body>
+  <button class="ds-btn ds-btn--ghost ds-theme-toggle" type="button" onclick="DS.Theme.toggle()">Theme wechseln</button>
+
+  <header class="ds-guide-header">
+    <h1>YES Tools — Design System</h1>
+    <p>Komponenten &amp; Styles, extrahiert aus dem Welcome-Popup und der Startseite. Eine Datei-Basis in CSS, JS und PHP für alle YES-Projekte.</p>
+  </header>
+
+  <section class="ds-guide-section">
+    <h2>Farben</h2>
+    <div class="ds-row">
+      <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--ds-bg)"></div>bg</div>
+      <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--ds-surface)"></div>surface</div>
+      <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--ds-accent-blue)"></div>accent-blue</div>
+      <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--ds-accent-purple)"></div>accent-purple</div>
+      <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--ds-accent-green)"></div>accent-green</div>
+      <div class="ds-swatch"><div class="ds-swatch__chip" style="background:var(--ds-invert-bg)"></div>invert-bg</div>
+    </div>
+  </section>
+
+  <section class="ds-guide-section">
+    <h2>Buttons</h2>
+    <div class="ds-row">
+      <button class="ds-btn ds-btn--primary" data-ds-ripple type="button">Jetzt loslegen</button>
+      <button class="ds-btn ds-btn--ghost" data-ds-ripple type="button">Sekundär</button>
+      <button class="ds-btn ds-btn--icon" data-ds-tooltip="Einstellungen" type="button">⚙</button>
+    </div>
+  </section>
+
+  <section class="ds-guide-section">
+    <h2>Tool-Karten</h2>
+    <div class="ds-grid-3">
+      <a class="ds-card ds-card--glow" href="#">
+        <div class="ds-card__header">
+          <span class="ds-icon-chip">⚡</span>
+          <span class="ds-card__arrow">&rarr;</span>
+        </div>
+        <div>
+          <h3 class="ds-card__title">Brizy Code Decompiler</h3>
+          <p class="ds-card__desc">Refactor bloated Brizy exports in sauberes, semantisches HTML5 &amp; CSS.</p>
+        </div>
+      </a>
+      <a class="ds-card ds-card--glow" href="#">
+        <div class="ds-card__header">
+          <span class="ds-icon-chip">🌐</span>
+          <span class="ds-card__arrow">&rarr;</span>
+        </div>
+        <div>
+          <h3 class="ds-card__title">Web Extractor Studio</h3>
+          <p class="ds-card__desc">Landingpages extrahieren, Bilder konvertieren, Links neu schreiben.</p>
+        </div>
+      </a>
+      <a class="ds-card ds-card--glow" href="#">
+        <div class="ds-card__header">
+          <span class="ds-icon-chip">✉️</span>
+          <span class="ds-card__arrow">&rarr;</span>
+        </div>
+        <div>
+          <h3 class="ds-card__title">Newsletter Studio</h3>
+          <p class="ds-card__desc">Outlook-sicherer MSO E-Mail-Builder mit CSS-Inliner &amp; Spam-Audit.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="ds-guide-section">
+    <h2>Eingabefeld</h2>
+    <div class="ds-field">
+      <textarea class="ds-input" data-ds-autoresize data-min-height="52" data-max-height="200" placeholder="Was möchtest du bauen oder analysieren?"></textarea>
+      <button class="ds-field__action" type="button" data-ds-tooltip="Senden">↵</button>
+    </div>
+  </section>
+
+  <section class="ds-guide-section">
+    <h2>Checkbox &amp; Badge</h2>
+    <div class="ds-row">
+      <label class="ds-checkbox" for="guide-checkbox">
+        <input type="checkbox" id="guide-checkbox">
+        <span class="ds-checkbox__box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <span class="ds-checkbox__label">Nicht mehr anzeigen</span>
+      </label>
+      <span class="ds-badge">Neu</span>
+      <span class="ds-badge">Beta</span>
+    </div>
+  </section>
+
+  <section class="ds-guide-section">
+    <h2>Popup / Modal</h2>
+    <button class="ds-btn ds-btn--primary" data-ds-modal-trigger="#ds-welcome-modal" type="button">Willkommens-Popup öffnen</button>
+  </section>
+
+  <div class="ds-modal-overlay" id="ds-welcome-modal" data-ds-modal data-dismiss-key="guide-welcome-dismissed" hidden aria-hidden="true">
+    <div class="ds-modal" role="dialog" aria-modal="true" aria-labelledby="ds-welcome-modal-title">
+      <div class="ds-modal__media">
+        <img src="https://firebasestorage.googleapis.com/v0/b/studio-9373604763-307d1.firebasestorage.app/o/xlpm.de%2Fyes-tools.webp?alt=media&token=9127c698-4b77-4432-b763-4783215af91a" alt="Willkommen bei 2.0">
+      </div>
+      <div class="ds-modal__body">
+        <div class="ds-modal__head">
+          <h2 class="ds-modal__title" id="ds-welcome-modal-title">Willkommen bei 2.0</h2>
+          <p class="ds-modal__subtitle">Eine neue Ära der Produktivität. Intelligenter, schneller und tiefer integriert.</p>
+        </div>
+        <div class="ds-modal__features">
+          <div class="ds-modal__feature">
+            <div class="ds-modal__feature-icon">🧠</div>
+            <div><h3>Native KI-Integration</h3><p>Die YES KI ist tief in alle Tools integriert und bedient sie autonom.</p></div>
+          </div>
+          <div class="ds-modal__feature">
+            <div class="ds-modal__feature-icon">🪄</div>
+            <div><h3>Headless Architektur</h3><p>UI strikt von der Logik getrennt — pfeilschnelle Core-Engine.</p></div>
+          </div>
+          <div class="ds-modal__feature">
+            <div class="ds-modal__feature-icon">⚡</div>
+            <div><h3>Shy Tool &amp; Shortcuts</h3><p>Smarte Typografie, Silbentrennung und globale Shortcuts.</p></div>
+          </div>
+        </div>
+        <div class="ds-modal__footer">
+          <label class="ds-checkbox" for="ds-welcome-modal-remember">
+            <input type="checkbox" id="ds-welcome-modal-remember" data-ds-remember>
+            <span class="ds-checkbox__box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <span class="ds-checkbox__label">Nicht mehr anzeigen</span>
+          </label>
+          <button class="ds-btn ds-btn--primary" data-ds-modal-close data-ds-ripple type="button">Jetzt loslegen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/design-system.js"></script>
+</body>
+</html>
