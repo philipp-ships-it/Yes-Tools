@@ -1,0 +1,55 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "yestools"
+version = "0.1.0"
+description = "YES Tools — CLI, TUI und MCP-Server: Dokument-, HTML- und Bild-Werkzeuge für Menschen und KI-Agenten"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary" }
+authors = [{ name = "YES Agentur" }]
+keywords = ["cli", "tui", "mcp", "ai-agent", "html", "docx", "tooling"]
+
+# Kern bleibt bewusst schlank: CLI + Agent-Harness laufen mit diesen drei
+# Paketen. Alles Formatspezifische (docx, Bilder, Silbentrennung) liegt in
+# Extras und wird von den Tools zur Laufzeit sauber gemeldet, wenn es fehlt.
+dependencies = [
+    "typer>=0.12",
+    "rich>=13.7",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+tui = ["textual>=0.80"]
+mcp = ["mcp>=2.0"]
+docs = [
+    "python-docx>=1.1",
+    "mammoth>=1.8",
+    "beautifulsoup4>=4.12",
+    "pyphen>=0.15",
+    "pillow>=10.3",
+]
+dev = [
+    "pytest>=8.2",
+    "pytest-asyncio>=0.23",
+]
+all = [
+    "yestools[tui,mcp,docs]",
+]
+
+[project.scripts]
+yestools = "yestools.cli:main"
+yes-tools = "yestools.cli:main"
+
+[project.urls]
+Repository = "https://github.com/philipp-ships-it/Yes-Tools"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/yestools"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+filterwarnings = ["ignore::DeprecationWarning"]

@@ -52,6 +52,7 @@ src/lib/ai/      KI-Tool-Calling-Harness — siehe docs/ai-harness.md
 src/lib/         Reine Kernlogik (auch von der Headless-CLI genutzt)
 src/components/  UI-Komponenten, App-Chrome, KI-Sidebar
 src/store/       Cross-Tool State (zustand)
+cli/             Python-CLI, TUI & MCP-Server — siehe docs/cli-tui.md
 docs/            Vollständige Dokumentation (siehe unten)
 Design/          Eigenständiges CSS/JS/PHP Design-System
 ```
@@ -63,15 +64,34 @@ Design/          Eigenständiges CSS/JS/PHP Design-System
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Technischer Aufbau, Ordnerstruktur, State-Management, Deployment |
 | [`docs/TOOLS.md`](docs/TOOLS.md) | Katalog aller 17 Tools mit Zweck & Quelldatei |
 | [`docs/ai-harness.md`](docs/ai-harness.md) | Architektur des KI-Tool-Calling-Systems (Recherche, Design, Sicherheitsmodell) |
+| [`cli/README.md`](cli/README.md) | Python-CLI, TUI & MCP-Server: Bedienung, Installation, Werkzeugkatalog |
+| [`docs/cli-tui.md`](docs/cli-tui.md) | Architektur der CLI/TUI: Registry, Path-Jail, Schreibrechte, Agent-Anbindung |
 | [`docs/headless-llm.md`](docs/headless-llm.md) | Headless-CLI für Automatisierung & LLM-Agenten außerhalb des Browsers |
 | [`TESTING.md`](TESTING.md) | Teststrategie, Vorlagen, Konventionen |
 | [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) | Entwicklungs-Setup, Code-Stil, Beitragsprozess |
 | [`Design/README.md`](Design/README.md) | Framework-unabhängiges Design-System (CSS/JS/PHP), extrahiert aus der App |
 
-## Headless-Nutzung
+## Terminal & KI-Agenten (`cli/`)
 
-Kern-Funktionen der Tools sind auch ohne Browser-UI nutzbar — z. B. für
-CI-Pipelines oder als Werkzeug für andere LLM-Agenten:
+Neben der Web-App gibt es YES Tools als Python-Paket mit TUI, CLI, MCP-Server
+und eigenem Agent-Harness — für Projektordner voller Word-, HTML- und
+Bilddateien:
+
+```bash
+pip install "yestools[all]"
+yestools init ~/kunde-projekt        # Workspace: documents/ html/ assets/ output/
+yestools                              # Terminal-Oberfläche mit KI-Chat
+yestools agent "wandle documents/angebot.docx nach html/ um"
+yestools mcp serve                    # MCP-Server für Claude Code, Codex, opencode, OpenClaw …
+```
+
+Dieselben Werkzeuge sind damit auf vier Wegen erreichbar: TUI, Agent-CLI,
+direkter Tool-Aufruf (`yestools run <tool> --json`) und MCP.
+Details: [`cli/README.md`](cli/README.md) und [`docs/cli-tui.md`](docs/cli-tui.md).
+
+## Headless-Nutzung (TypeScript-Engine)
+
+Die Kern-Funktionen der Web-App sind zusätzlich ohne Browser-UI nutzbar:
 
 ```bash
 npx tsx src/lib/cli.ts HtmlTools beautify "<div><p>Hallo</p></div>"

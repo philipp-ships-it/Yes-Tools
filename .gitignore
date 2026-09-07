@@ -27,3 +27,13 @@ dist-ssr
 .env
 .env.local
 .env.*.local
+
+# Python (cli/)
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+coverage/
+.coverage
